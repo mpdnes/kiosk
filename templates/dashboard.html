@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - RTCNT Equipment Kiosk</title>
+    <!-- Link to Google Fonts for Hanken Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Fixed Header -->
+    <div class="header">
+        <img class="logo" src="{{ url_for('static', filename='images/rit_logo.png') }}" alt="RIT Logo">
+        <div class="header-text">Real-Time Captioning & Notetaking</div>
+    </div>
+    <main>
+        <div class="center-container">
+            <div class="main-title">Welcome, {{ user_name }}</div>
+            <div class="instructions">Choose an action below:</div>
+            <div class="button-container">
+                <a href="{{ url_for('main_bp.checkin_page') }}" class="primary-button">Check In</a>
+                <a href="{{ url_for('main_bp.checkout_page') }}" class="primary-button">Check Out</a>
+                <a href="{{ url_for('main_bp.asset_info_page') }}" class="primary-button">Get Asset Info</a>
+            </div>
+            <a href="{{ url_for('main_bp.logout') }}" class="logout-button">Logout</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RTCNT Equipment Kiosk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="header">
+        <img class="logo" src="{{ url_for('static', filename='images/rit_logo.png') }}" alt="RIT Logo" />
+        <div class="header-text">Real-Time Captioning & Notetaking</div>
+    </div>
+    <main>
+        <div class="center-container">
+            <div class="main-title">Welcome to RTCNT Equipment Kiosk</div>
+            <div class="button-container">
+                <a href="{{ url_for('main_bp.sign_in') }}" class="primary-button">Login</a>
+                <a href="{{ url_for('main_bp.asset_info_route', barcode='') }}" class="secondary-button">Check Asset Info</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

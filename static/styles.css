@@ -1,0 +1,251 @@
+/* General styling */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Hanken Grotesk', sans-serif;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px; /* Base font size */
+}
+
+/* Fixed Header (Nav) */
+.header {
+    width: 100%;
+    padding: 1rem 2rem; /* Consistent padding */
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    position: fixed; 
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.logo {
+    width: 150px; /* Fixed width for consistency */
+    height: auto;
+}
+
+.header-text {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 2.25rem; /* Consistent font size across both pages */
+    font-weight: 800;
+    margin-left: 1.25rem; 
+    line-height: 1.2; /* Ensure consistent line height */
+}
+
+/* Main content styling */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    flex-direction: column;
+    padding-top: 6rem; /* Adjust to prevent overlap with header */
+    box-sizing: border-box;
+}
+
+/* Container for the main title, image/camera, instructions, and buttons */
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Align items to the top */
+    gap: 2em; /* Consistent gap between elements */
+    width: 100%;
+    min-height: 80vh; /* Ensure the container takes up at least 80% of the viewport height */
+    max-width: 800px; /* Limit max width for larger screens */
+    padding: 0 1rem; /* Horizontal padding for smaller screens */
+    box-sizing: border-box;
+}
+
+/* Title */
+.main-title {
+    font-size: 3.5rem; /* Responsive font size */
+    font-weight: 400; /* Regular weight */
+    text-align: center;
+    margin-bottom: 1em; /* Space below the title */
+}
+
+/* Placeholder for image */
+.placeholder, .camera-container {
+    width: 25rem; 
+    height: 16.67rem; 
+    background-color: #d3d3d3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden; 
+    position: relative; 
+    border-radius: 0.5rem; /* Rounded corners */
+    box-sizing: border-box;
+}
+
+/* Scan Image Styling */
+.scan-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the container */
+}
+
+/* Camera container specific styling */
+.camera-container {
+    background-color: #000; /* Black background for camera view */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+#camera {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure video covers the container */
+}
+
+/* Overlay for camera frame */
+.camera-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 4px solid #F76903; /* Orange border */
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    pointer-events: none; /* Allows clicks to pass through */
+}
+
+/* Instructions text */
+.instructions {
+    font-size: 1rem; /* 16px = 1rem */
+    color: rgba(0, 0, 0, 0.8);
+    text-align: center;
+    max-width: 600px; /* Limit width for readability */
+    padding: 0 1rem; /* Horizontal padding */
+    margin-bottom: 1em; /* Space below instructions */
+}
+
+/* Button styling */
+.start-button, .cancel-button {
+    display: inline-flex;
+    width: 24.25rem; /* 387.65px = 24.25rem */
+    padding: 1.3rem 1.75rem; /* Responsive padding */
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 0.6rem;
+    text-decoration: none; /* Remove underline from links */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    font-weight: 600; /* Semi-bold for start-button */
+    font-size: 1.875rem; /* 30px = 1.875rem */
+    line-height: 2rem;
+    box-sizing: border-box;
+    margin-top: 2rem; /* Ensure button spacing is consistent */
+}
+
+/* Start Button */
+.start-button {
+    background-color: #F76903;
+    color: white;
+}
+
+.start-button:hover {
+    background-color: #d85d02;
+}
+
+.start-button:active {
+    background-color: #b84f02;
+}
+
+/* Cancel Button */
+.cancel-button {
+    background-color: #CCCCCC; /* Gray color for cancel */
+    color: #000; 
+    font-weight: 400; /* Lighter font weight */
+    width: 24.25rem; /* Same width as start-button */
+}
+
+.cancel-button:hover {
+    background-color: #999999; /* Darker gray on hover */
+}
+
+.cancel-button:active {
+    background-color: #666666; 
+}
+
+/* Optional reset to ensure buttons appear uniform */
+button, a.button, a {
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-text {
+        font-size: 1.75rem;
+    }
+
+    .main-title {
+        font-size: 2.5rem;
+        margin-bottom: 1em; /* Space below the title */
+    }
+
+    .placeholder, .camera-container {
+        width: 20rem; /* Adjusted for smaller screens */
+        height: 13.33rem; /* Adjusted for smaller screens */
+    }
+
+    .start-button, .cancel-button {
+        width: 20rem; /* 320px = 20rem */
+        font-size: 1.5rem; /* 24px = 1.5rem */
+        padding: 1rem 1.5rem;
+    }
+
+    .instructions {
+        font-size: 0.875rem; /* 14px = 0.875rem */
+        max-width: 90%; /* Use percentage for better scaling */
+    }
+
+    .center-container {
+        gap: 3em; /* Adjusted gap for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .header-text {
+        font-size: 1.5rem;
+    }
+
+    .main-title {
+        font-size: 2rem;
+        margin-bottom: 1em; /* Space below the title */
+    }
+
+    .placeholder, .camera-container {
+        width: 18rem; /* 288px = 18rem */
+        height: 12rem; /* 192px = 12rem */
+    }
+
+    .start-button, .cancel-button {
+        width: 18rem; /* 288px = 18rem */
+        font-size: 1.25rem; /* 20px = 1.25rem */
+        padding: 0.8rem 1.25rem;
+    }
+
+    .instructions {
+        font-size: 0.75rem; /* 12px = 0.75rem */
+        max-width: 100%;
+    }
+
+    .center-container {
+        gap: 2em; /* Adjusted gap for very small screens */
+    }
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Check In - RTCNT Equipment Kiosk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="header">
+        <img class="logo" src="{{ url_for('static', filename='images/rit_logo.png') }}" alt="RIT Logo">
+        <div class="header-text">Check In an Asset</div>
+    </div>
+    <main>
+        <div class="center-container">
+            <div class="instructions">Scan the barcode of the asset to check in.</div>
+            <video id="camera" autoplay playsinline></video>
+            <canvas id="canvas" style="display: none;"></canvas>
+            <div id="feedback" class="feedback-message"></div>
+            <a href="{{ url_for('main_bp.dashboard') }}" class="cancel-button">Back to Dashboard</a>
+        </div>
+    </main>
+        <!-- JavaScript for Camera Access and Frame Capture -->
+        <script>
+                const video = document.getElementById('camera');
+                const canvas = document.getElementById('canvas');
+                const feedback = document.getElementById('feedback');
+    
+                  // Access the device camera and stream to video element
+                  async function initCamera() {
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({
+                            video: { facingMode: 'environment' }
+                        });
+                          video.srcObject = stream;
+                          video.onloadedmetadata = () => {
+                              video.play();
+                              startCapture();
+                          };
+                      } catch (error) {
+                          console.error('Error accessing camera:', error);
+                          alert('Unable to access the camera. Please check your permissions.');
+                      }
+                  }
+    
+                  // Function to capture the current frame from the video stream
+                  function captureFrame() {
+                      // Set canvas dimensions to video dimensions
+                      canvas.width = video.videoWidth;
+                      canvas.height = video.videoHeight;
+                      // Draw the current frame from video to canvas
+                      const ctx = canvas.getContext('2d');
+                      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                      // Convert the canvas image to data URL
+                      const dataURL = canvas.toDataURL('image/jpeg');
+                      // Process the captured image
+                      processCapturedImage(dataURL);
+                  }
+    
+                  // Function to handle the captured image
+               // Function to handle the captured image
+                  function processCapturedImage(dataURL) {
+                      fetch('{{ url_for('main_bp.process_image') }}', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ image: dataURL }),
+              })
+              .then(response => response.json())
+              .then(data => {
+                  console.log('Response from process_image:', data); // Log the response
+                  if (data.success) {
+                      feedback.textContent = data.message;
+                      feedback.style.color = 'green';
+                      stopCamera(); // Stop the camera
+                      // Redirect to the URL provided in the response
+                      if (data.redirect) {
+                          window.location.href = data.redirect;
+                      }
+                  } else {
+                      feedback.textContent = data.error;
+                      feedback.style.color = 'red';
+                  }
+              })
+              .catch((error) => {
+                  console.error('Error:', error);
+                  feedback.textContent = 'Error processing your request.';
+                  feedback.style.color = 'red';
+              });
+          }
+    
+                  // Start capturing frames at intervals
+                  function startCapture() {
+                      captureFrame();
+                      // Continue capturing every 500ms
+                      window.captureInterval = setInterval(captureFrame, 500);
+                  }
+    
+                  // Function to stop the camera stream
+                  function stopCamera() {
+                      const stream = video.srcObject;
+                      if (stream) {
+                          const tracks = stream.getTracks();
+                          tracks.forEach(track => track.stop());
+                          video.srcObject = null;
+                      }
+                      // Clear the capture interval
+                      clearInterval(window.captureInterval);
+                  }
+    
+                  // Initialize camera on page load
+                  window.addEventListener('load', initCamera);
+    
+                  // Cleanup on page unload
+                  window.addEventListener('beforeunload', stopCamera);
+    </script>
+</body>
+</html>
